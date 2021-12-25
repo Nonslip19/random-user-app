@@ -11,7 +11,9 @@ body {
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+  background: linear-gradient(235deg, rgba(124, 216, 202, 0.425) 15%, rgba(235, 185, 114, 0.438) 94%);
+
 }
 
 code {
