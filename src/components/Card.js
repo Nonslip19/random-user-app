@@ -36,7 +36,7 @@ const Card = () => {
             </div>
                 <hr/>
                 <div>Age: {user.dob?.age}</div> <br />
-                <div>Register Date: {user.register?.date}</div>
+                <div>Register Date: {user.registered?.date.slice(0, 10)}</div>
      </div>    
     <button onClick={userData}>Random User</button>
 </>        
