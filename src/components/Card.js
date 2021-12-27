@@ -1,39 +1,54 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-import email from "../assets/email.svg";
+import emailImg from "../assets/email.svg";
 import location from "../assets/location.svg";
-import phone from "../assets/phone.svg";
-
-const api = "https://randomuser.me/api/";
+import phoneImg from "../assets/phone.svg";
 
 
 const Card = () => {
+    const api = "https://randomuser.me/api/";
     const [user, setUser] = useState({});
-  
-    useEffect(() => {userData()}, []);
+    
+    const userData = async() => { const firstData = await axios(api).then(res => (res.data.results[0]))
+        .catch((err) => console.log(err));
 
-    const userData = () => { axios(api).then(res => setUser(res.data.results[0]))
-    .catch((err) => console.log(err));
+        console.log(firstData);
+        const {
+            name:{title, first, last},
+            picture:{large},
+            email,
+            phone,
+            dob:{age},
+            registered:{date},
+            location:{state, country}
+
+        } = firstData;
+
+        setUser({title, first, last, large, email, phone, age, date, state, country});
     };
+
+    const {title, first, last, large, email, phone, age, date, state, country} = user;
+
+    useEffect(() => userData(), []);
    
     console.log(user);
     return (
 <> 
     <div className='card-container'>
         <div className="grid-container"> 
-            <div><img src={user.picture.large} alt=""  className='personImg'/></div>
-            <div><h3> {user.name.title} {user.name.first} {user.name.last}</h3></div>
-            <div><img src={email} alt="email"/></div>
-            <div>{user.email}</div>
-            <div><img src={phone} alt="phone"/></div>  
-            <div>{user.phone}</div>
+            <div><img src={large} alt=""  className='personImg'/></div>
+            <div><h3> {title} {first} {last}</h3></div>
+            <div><img src={emailImg} alt="email"/></div>
+            <div>{email}</div>
+            <div><img src={phoneImg} alt="phone"/></div>  
+            <div>{phone}</div>
             <div><img src={location} alt="location"/></div>   
-            <div>{user.location.state}-{user.location.country}</div>
+            <div>{state}-{country}</div>
         </div>
             <hr/>
-            <div>Age: {user.dob.age}</div> <br />
-            <div>Register Date: {user.registered.date.slice(0,10)}</div>
+            <div>Age: {age}</div> <br />
+            <div>Register Date: {date.slice(0,10)}</div>
     </div>    
       <button onClick={userData}>Random User</button>
 </>
